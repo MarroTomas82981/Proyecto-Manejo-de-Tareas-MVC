@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 using TareasMVC;
-using Microsoft.AspNetCore.Mvc.Razor;
-using TareasMVC.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,21 +15,16 @@ var politicaUsuariosAutenticados = new AuthorizationPolicyBuilder()
 builder.Services.AddControllersWithViews(opciones =>
 {
     opciones.Filters.Add(new AuthorizeFilter(politicaUsuariosAutenticados));
-}).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-.AddDataAnnotationsLocalization(opciones =>
-{
-    opciones.DataAnnotationLocalizerProvider = (_, factoria) =>
-        factoria.Create(typeof(RecursoCompartido));
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
     opciones.UseSqlServer("name=DefaultConnection"));
 
-builder.Services.AddAuthentication().AddMicrosoftAccount(opciones =>
-{
-    opciones.ClientId = builder.Configuration["MicrosoftClientId"];
-    opciones.ClientSecret = builder.Configuration["MicrosoftSecretId"];
-});
+//builder.Services.AddAuthentication().AddMicrosoftAccount(opciones =>
+//{
+//    opciones.ClientId = builder.Configuration["MicrosoftClientId"];
+//    opciones.ClientSecret = builder.Configuration["MicrosoftSecretId"];
+//});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(opciones =>
 {
@@ -48,20 +39,7 @@ builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.Ap
         opciones.AccessDeniedPath = "/usuarios/login";
     });
 
-builder.Services.AddLocalization(opciones =>
-{
-    opciones.ResourcesPath = "Recursos";
-});
-
 var app = builder.Build();
-
-
-app.UseRequestLocalization(opciones =>
-{
-    opciones.DefaultRequestCulture = new RequestCulture("es");
-    opciones.SupportedUICultures = Constantes.CulturasUISoportadas
-        .Select(cultura => new CultureInfo(cultura.Value)).ToList();
-});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

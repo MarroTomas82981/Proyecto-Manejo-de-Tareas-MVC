@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eAQMy5CueXLGs+Ulfv8fT9GlEfuAE8ZBcsm0omZudCjL7hFm3r55V8OYRO7tNY8XXIan+Aq1O+eAjGZxU27LNQ==",
+  "dgSpecHash": "hgukBCayxMSdQP50vWQfm91wy8h8wAJvViK/3Tjh/6l3jrOHXXATjYYRGHNbNDdAB8GdjiSifBQlnmT/SkdXww==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tomas\\Downloads\\Cursos\\TareasMVC\\TareasMVC\\TareasMVC.csproj",
+  "projectFilePath": "C:\\Users\\tomas\\Downloads\\Cursos\\Nueva carpeta (2)\\Nueva carpeta\\Proyecto-Manejo-de-Tareas-MVC\\TareasMVC\\TareasMVC\\TareasMVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tomas\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\tomas\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
