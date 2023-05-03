@@ -17,7 +17,7 @@ namespace TareasMVC.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0-preview.3.23174.2")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -226,9 +226,6 @@ namespace TareasMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArchivoAdjuntoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
@@ -247,8 +244,6 @@ namespace TareasMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArchivoAdjuntoId");
-
                     b.HasIndex("TareaId");
 
                     b.ToTable("ArchivosAdjuntos");
@@ -260,10 +255,7 @@ namespace TareasMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArchivoAdjuntoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Descripion")
+                    b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Orden")
@@ -276,8 +268,6 @@ namespace TareasMVC.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ArchivoAdjuntoId");
 
                     b.HasIndex("TareaId");
 
@@ -306,7 +296,12 @@ namespace TareasMVC.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<string>("UsuarioCreacionId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioCreacionId");
 
                     b.ToTable("Tareas");
                 });
@@ -364,12 +359,8 @@ namespace TareasMVC.Migrations
 
             modelBuilder.Entity("TareasMVC.Entidades.ArchivoAdjunto", b =>
                 {
-                    b.HasOne("TareasMVC.Entidades.ArchivoAdjunto", null)
-                        .WithMany("ArchivosAdjuntos")
-                        .HasForeignKey("ArchivoAdjuntoId");
-
                     b.HasOne("TareasMVC.Entidades.Tarea", "Tarea")
-                        .WithMany()
+                        .WithMany("ArchivosAdjuntos")
                         .HasForeignKey("TareaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -379,10 +370,6 @@ namespace TareasMVC.Migrations
 
             modelBuilder.Entity("TareasMVC.Entidades.Paso", b =>
                 {
-                    b.HasOne("TareasMVC.Entidades.ArchivoAdjunto", null)
-                        .WithMany("Pasos")
-                        .HasForeignKey("ArchivoAdjuntoId");
-
                     b.HasOne("TareasMVC.Entidades.Tarea", "Tarea")
                         .WithMany("Pasos")
                         .HasForeignKey("TareaId")
@@ -392,15 +379,19 @@ namespace TareasMVC.Migrations
                     b.Navigation("Tarea");
                 });
 
-            modelBuilder.Entity("TareasMVC.Entidades.ArchivoAdjunto", b =>
+            modelBuilder.Entity("TareasMVC.Entidades.Tarea", b =>
                 {
-                    b.Navigation("ArchivosAdjuntos");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId");
 
-                    b.Navigation("Pasos");
+                    b.Navigation("UsuarioCreacion");
                 });
 
             modelBuilder.Entity("TareasMVC.Entidades.Tarea", b =>
                 {
+                    b.Navigation("ArchivosAdjuntos");
+
                     b.Navigation("Pasos");
                 });
 #pragma warning restore 612, 618
